@@ -124,9 +124,4 @@ export default {
     en: 'exported successfully',
     ja: 'exported successfully',
   },
-  importSuccess: {
-    zh: '导入成功',
-    en: 'imported successfully',
-    ja: 'imported successfully',
-  },
 }
