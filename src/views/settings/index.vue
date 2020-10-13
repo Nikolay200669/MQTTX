@@ -74,29 +74,6 @@
 
       <el-divider></el-divider>
     </div>
-
-    <div class="settings-advanced">
-      <div class="settings-title">{{ $t('settings.advanced') }}</div>
-      <el-divider></el-divider>
-
-      <el-row class="settings-item" type="flex" justify="space-between">
-        <el-col :span="18">
-          <label>{{ $t('settings.dataManage') }}</label>
-        </el-col>
-        <el-col :span="6">
-          <el-button type="primary" size="mini" icon="el-icon-upload" @click="handleImportData">
-            {{ $t('settings.dataRecovery') }}
-          </el-button>
-          <el-button type="primary" size="mini" icon="el-icon-printer" @click="handleExportData">
-            {{ $t('settings.dataBackup') }}
-          </el-button>
-        </el-col>
-      </el-row>
-      <el-divider></el-divider>
-
-      <ImportData :visible.sync="showImportData" />
-      <ExportData :visible.sync="showExportData" />
-    </div>
   </div>
 </template>
 
@@ -104,12 +81,8 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Getter, Action } from 'vuex-class'
 import { ipcRenderer } from 'electron'
-import ImportData from '@/components/ImportData.vue'
-import ExportData from '@/components/ExportData.vue'
 
-@Component({
-  components: { ImportData, ExportData },
-})
+@Component
 export default class Settings extends Vue {
   @Action('TOGGLE_THEME') private actionTheme!: (payload: { currentTheme: string }) => void
   @Action('TOGGLE_LANG') private actionLang!: (payload: { currentLang: string }) => void
@@ -134,8 +107,6 @@ export default class Settings extends Vue {
     { label: 'Dark', value: 'dark' },
     { label: 'Night', value: 'night' },
   ]
-  private showImportData = false
-  private showExportData = false
 
   private handleSelectChange(type: 'lang' | 'theme', value: string | number | boolean): void {
     if (type === 'theme') {
@@ -152,14 +123,6 @@ export default class Settings extends Vue {
 
   private handleInputChage(value: number) {
     this.actionMaxReconnectTimes({ maxReconnectTimes: value })
-  }
-
-  private handleImportData() {
-    this.showImportData = true
-  }
-
-  private handleExportData() {
-    this.showExportData = true
   }
 
   private created() {
@@ -186,10 +149,6 @@ export default class Settings extends Vue {
     margin-bottom: 80px;
   }
 
-  .settings-appearance {
-    margin-bottom: 80px;
-  }
-
   .el-divider--horizontal {
     margin: 15px 0;
   }
@@ -205,8 +164,7 @@ export default class Settings extends Vue {
     }
   }
 
-  .el-col-4,
-  .el-col-6 {
+  .el-col-4 {
     text-align: right;
   }
 
